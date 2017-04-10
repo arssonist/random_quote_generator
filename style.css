@@ -1,0 +1,41 @@
+
+nav{
+  margin:0 auto;
+  width:100%;
+  padding:10px;
+  text-align:center;
+  background-color: #000;
+  color:#fff;
+  font-family: Georgia, serif
+}
+
+#quote-getter-section{
+  margin:0 auto;
+  padding:10px;
+  text-align:center;
+  font-family: Georgia, serif
+}
+#quote-putter-section{
+  margin:0 auto;
+  width:50%;
+  padding-top:50px;
+  text-align:center;
+  font-family: Georgia, serif
+}
+
+.quotes{
+  width:80%;
+  background-color: #eee;
+  margin:0 auto;
+  padding:10px;
+  min-height: 100px;
+}
+
+#quote-text-box{
+  padding-top:20px;
+  padding-bottom:20px;
+}
+#quote-author-box{
+  padding-top:20px;
+  font-family: cursive;
+}
