@@ -1,10 +1,22 @@
 $(function() {
 
-  console.log(getQuote())
-  $('.twitter-share-button').attr('href', (index, value) => { //value is twitter.com
-    return value + "/intent/tweet?text=" + getQuote()
-  })
 
+  var url = "http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?"
+
+
+//on load, check if box is empty. If it is, then load quote
+  if($("#quote-text-box").html() === ""){
+    $.getJSON(url,function(json){
+      var author = json.quoteAuthor
+      var text   = json.quoteText
+
+        $("#quote-author-box").append(author)
+        $("#quote-text-box").append(text)
+      })
+    }
+
+
+//on click, give quote
   $('#quote-button').on('click',(e) => {
 
   // var url = "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=";
@@ -12,14 +24,11 @@ $(function() {
   // var url = "http://api.forismatic.com/api/1.0/method=getQuote&key=457653&format=json&lang=en"
 // url for getJSON
 
-// function to open twitter window
-// window.open()
-//
+
 // function to twitter
 // call open window mesageas params
 // inside callback get text, and send it bak out here
 
-  var url = "http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?"
 
     // $.ajax({
     //   url:url,
@@ -29,13 +38,7 @@ $(function() {
     $.getJSON(url,function(json){
       var author = json.quoteAuthor
       var text   = json.quoteText
-      // console.log(author)
-      // console.log(text)
-      // var string = JSON.stringify(json)
-      // string = string.slice(0)
-        // Object.keys(json).forEach((key) => {
-        // $("#quote-putter").append(key.quoteText)
-        // })
+
         $("#quote-text-box").empty()
         $("#quote-author-box").empty()
         $("#quote-author-box").append(author)
@@ -45,9 +48,21 @@ $(function() {
     })
   })
 
+
+
+$('.twitter-share-button').click(function(e){
+  let value = "https://twitter.com";
+  let text = $('#quote-text-box').html()
+  console.log(text)
+  let make_string = value + "/intent/tweet?text=" + text
+  console.log(make_string)
+  $('.twitter-share-button').attr('href',make_string)
+  console.log(make_string)
+    })
+
 var getQuote = function(){
   var text = $('#quote-text-box').html()
-  if (text != "Quotes goe here!"){
+  if (text != ""){
     return text
   }
 }
