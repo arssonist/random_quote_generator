@@ -39,3 +39,14 @@ nav{
   padding-top:20px;
   font-family: cursive;
 }
+.fa-twitter-square{
+  color:#1b95e0;
+}
+.twitter-share-button:hover{
+   cursor: pointer;
+   color:white;
+
+}
+.twitter-share-button{
+  color:#999;
+}
