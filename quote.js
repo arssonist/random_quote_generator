@@ -7,7 +7,7 @@ $(function() {
 
 // --------HTTPS API url
   var url =
- `https://andruxnet-random-famous-quotes.p.mashape.com/?cat=${quote_type}`
+ "https://andruxnet-random-famous-quotes.p.mashape.com/?cat="
   const twitter_url = "https://twitter.com";
   const key = "xRqMQONRP0mshyAA6LJmal2wXJX8p1NUZ4JjsnqIPxoEssQFS3"
 
@@ -17,7 +17,7 @@ $(function() {
   // set to movies by default
     quote_type = "movies"
 
-    request(url, key, twitter_url)
+    request(url, key, twitter_url, quote_type)
 
 // // -------HTTP API request
 // //     // $.getJSON(url,function(json){
@@ -50,20 +50,20 @@ $(function() {
 // MOVIES QUOTES
     if($('#quote-type-selector option:selected').val() === 'movie'){
       quote_type = "movies";
-      request(url, key, twitter_url)
+      request(url, key, twitter_url, quote_type)
     }
     if($('#quote-type-selector option:selected').val() === 'famous'){
       quote_type = "famous";
-      request(url, key, twitter_url)
-      console.log(true)
+      request(url, key, twitter_url, quote_type)
+      console.log()
     }
   })
 })
 
 
-var request = function(url, key, twitter_url){
+var request = function(url, key, twitter_url, quote_type){
   $.ajax({
-    url:url,
+    url:url + quote_type,
     method:'GET',
     dataType:'JSON',
     headers:{
@@ -74,6 +74,7 @@ var request = function(url, key, twitter_url){
     }).done(function(json){
     let author = json.author
     let text   = json.quote
+    console.log(json.category)
       $("#quote-text-box").empty()
       $("#quote-author-box").empty()
       $("#quote-author-box").append(author)
