@@ -1,12 +1,25 @@
 $(function() {
 
-  var url = "http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?"
+  // var url = "http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?"
+  var url = "https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies"
   var value = "https://twitter.com";
+  var key = "xRqMQONRP0mshyAA6LJmal2wXJX8p1NUZ4JjsnqIPxoEssQFS3"
 
 // on load, check if box is empty. If it is, then load quote
   if($("#quote-text-box").html() === ""){
 //
-    $.getJSON(url,function(json){
+    $.ajax({
+      url:url,
+      method:'GET',
+      dataType:'JSON',
+      headers:{
+        "Content-Type":"application/x-www-form-urlencoded",
+        "X-Mashape-Key":key,
+        "Accept":"application/json"
+      }
+    }).done(function(json){
+      console.log(json)
+    // $.getJSON(url,function(json){
       let author = json.quoteAuthor
       let text   = json.quoteText
 //append quote to page
