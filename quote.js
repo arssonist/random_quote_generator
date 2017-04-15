@@ -14,10 +14,10 @@ $(function() {
 //ON EMPTY PAGE LOAD
   if($("#quote-text-box").html() === ""){
 
-// set to movies by default
-  quote_type = "movies"
+  // set to movies by default
+    quote_type = "movies"
 
-  request(url, key, twitter_url)
+    request(url, key, twitter_url)
 
 // // -------HTTP API request
 // //     // $.getJSON(url,function(json){
@@ -25,7 +25,6 @@ $(function() {
 // //       let author = json.quoteAuthor
 // //       let text   = json.quoteText
 // // //append quote to page
-
 
    }
 
@@ -48,50 +47,19 @@ $(function() {
 
 // -----------------HTTPS
 
-  if($('#quote-type-selector option:selected').val() === 'movie'){
-    quote_type = "movies"
-    request(url, key, twitter_url)
-  }
-    // $.ajax({
-    //   url:url,
-    //   method:'GET',
-    //   dataType:'JSON',
-    //   headers:{
-    //     "Content-Type":"application/x-www-form-urlencoded",
-    //     "X-Mashape-Key":key,
-    //     "Accept":"application/json"
-    //     }
-    //   }).done(function(json){
-    //   let author = json.author
-    //   let text   = json.quote
-    //
-    //     $("#quote-text-box").empty()
-    //     $("#quote-author-box").empty()
-    //     $("#quote-author-box").append(author)
-    //     $("#quote-text-box").append(text)
-    //
-    //
-    //
-    //       let text_content = $('#quote-text-box').html()
-    //       // console.log(text_content)
-    //       let author_content = $('#quote-author-box').html();
-    //
-    //       let full_quote = `${text_content} -${author_content}`
-    //
-    //       let make_string = twitter_url + "/intent/tweet?text=" + full_quote
-    //
-    //       $(".twitter-share-button").click(function(e){
-    //
-    //
-    //
-    //         $('.twitter-share-button').attr('href',make_string)
-    //         console.log(make_string)
-    //
-    //       })
-    //   })
-
-    })
+// MOVIES QUOTES
+    if($('#quote-type-selector option:selected').val() === 'movie'){
+      quote_type = "movies";
+      request(url, key, twitter_url)
+    }
+    if($('#quote-type-selector option:selected').val() === 'famous'){
+      quote_type = "famous";
+      request(url, key, twitter_url)
+      console.log(true)
+    }
   })
+})
+
 
 var request = function(url, key, twitter_url){
   $.ajax({
