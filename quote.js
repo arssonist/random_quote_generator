@@ -1,102 +1,128 @@
 $(function() {
-
+// ----HTTP API url
   // var url = "http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?"
-  var url = "https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies"
-  var value = "https://twitter.com";
-  var key = "xRqMQONRP0mshyAA6LJmal2wXJX8p1NUZ4JjsnqIPxoEssQFS3"
 
-// on load, check if box is empty. If it is, then load quote
+//empty var for quote type
+  var quote_type = ""
+
+// --------HTTPS API url
+  var url =
+ `https://andruxnet-random-famous-quotes.p.mashape.com/?cat=${quote_type}`
+  const twitter_url = "https://twitter.com";
+  const key = "xRqMQONRP0mshyAA6LJmal2wXJX8p1NUZ4JjsnqIPxoEssQFS3"
+
+//ON EMPTY PAGE LOAD
   if($("#quote-text-box").html() === ""){
-//
-    $.ajax({
-      url:url,
-      method:'GET',
-      dataType:'JSON',
-      headers:{
-        "Content-Type":"application/x-www-form-urlencoded",
-        "X-Mashape-Key":key,
-        "Accept":"application/json"
-      }
-    }).done(function(json){
-      console.log(json)
-    // $.getJSON(url,function(json){
-      let author = json.quoteAuthor
-      let text   = json.quoteText
-//append quote to page
-        $("#quote-author-box").append(author)
-        $("#quote-text-box").append(text)
-//
-//get quote content
-          let text_content = $('#quote-text-box').html()
-//get author content
-          let author_content = $('#quote-author-box').html();
 
-          let full_quote = `${text_content} -${author_content}`
+// set to movies by default
+  quote_type = "movies"
 
-          let make_string = value + "/intent/tweet?text=" + full_quote
-//           console.log(make_string)
-//  //add click to change the a href string
-    $(".twitter-share-button").click(function(e){
-    // e.preventDefault()
-     $('.twitter-share-button').attr('href',make_string)
-          console.log(make_string)
-       })
-     })
+  request(url, key, twitter_url)
+
+// // -------HTTP API request
+// //     // $.getJSON(url,function(json){
+// //       console.log(json)
+// //       let author = json.quoteAuthor
+// //       let text   = json.quoteText
+// // //append quote to page
+
 
    }
 
-//on click, give quote
+//ON BUTTON CLICK
   $('#quote-button').on('click',(e) => {
 
-// OTHER CALL TYPES
-  // var url = "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=";
+// ----------HTTP REQUEST
 //url for AJAX- NO JSONP
   // var url = "http://api.forismatic.com/api/1.0/method=getQuote&key=457653&format=json&lang=en"
-// url for getJSON
+
+// JSONP
+// url for ajax
     // $.ajax({
     //   url:url,
     //   method:'GET',
     //   dataType:'JSONP'
     // }).done(function(json){
 
-    $.getJSON(url,function(json){
-      let author = json.quoteAuthor
-      let text   = json.quoteText
+    // $.getJSON(url,function(json){
 
-        $("#quote-text-box").empty()
-        $("#quote-author-box").empty()
-        $("#quote-author-box").append(author)
-        $("#quote-text-box").append(text)
+// -----------------HTTPS
 
-
-
-          let text_content = $('#quote-text-box').html()
-          // console.log(text_content)
-          let author_content = $('#quote-author-box').html();
-
-          let full_quote = `${text_content} -${author_content}`
-
-          let make_string = value + "/intent/tweet?text=" + full_quote
-
-          $(".twitter-share-button").click(function(e){
-
-
-
-            $('.twitter-share-button').attr('href',make_string)
-            console.log(make_string)
-
-          })
-      })
-
-
-//
-//
-//
-//   })
-//
-//
-//
-
+  if($('#quote-type-selector option:selected').val() === 'movie'){
+    quote_type = "movies"
+    request(url, key, twitter_url)
+  }
+    // $.ajax({
+    //   url:url,
+    //   method:'GET',
+    //   dataType:'JSON',
+    //   headers:{
+    //     "Content-Type":"application/x-www-form-urlencoded",
+    //     "X-Mashape-Key":key,
+    //     "Accept":"application/json"
+    //     }
+    //   }).done(function(json){
+    //   let author = json.author
+    //   let text   = json.quote
+    //
+    //     $("#quote-text-box").empty()
+    //     $("#quote-author-box").empty()
+    //     $("#quote-author-box").append(author)
+    //     $("#quote-text-box").append(text)
+    //
+    //
+    //
+    //       let text_content = $('#quote-text-box').html()
+    //       // console.log(text_content)
+    //       let author_content = $('#quote-author-box').html();
+    //
+    //       let full_quote = `${text_content} -${author_content}`
+    //
+    //       let make_string = twitter_url + "/intent/tweet?text=" + full_quote
+    //
+    //       $(".twitter-share-button").click(function(e){
+    //
+    //
+    //
+    //         $('.twitter-share-button').attr('href',make_string)
+    //         console.log(make_string)
+    //
+    //       })
+    //   })
 
     })
   })
+
+var request = function(url, key, twitter_url){
+  $.ajax({
+    url:url,
+    method:'GET',
+    dataType:'JSON',
+    headers:{
+      "Content-Type":"application/x-www-form-urlencoded",
+      "X-Mashape-Key":key,
+      "Accept":"application/json"
+      }
+    }).done(function(json){
+    let author = json.author
+    let text   = json.quote
+      $("#quote-text-box").empty()
+      $("#quote-author-box").empty()
+      $("#quote-author-box").append(author)
+      $("#quote-text-box").append(text)
+        let text_content = $('#quote-text-box').html()
+        // console.log(text_content)
+        let author_content = $('#quote-author-box').html();
+
+        let full_quote = `${text_content} -${author_content}`
+
+        let make_string = twitter_url + "/intent/tweet?text=" + full_quote
+
+        $(".twitter-share-button").click(function(e){
+
+          $('.twitter-share-button').attr('href',make_string)
+          console.log(make_string)
+
+        })
+    })
+}
